@@ -12,11 +12,12 @@ class Logging {
 	private:
 	  int logNo;
     MinipackOutput miniout;
-    void sendPackedByte(char c);
+    void sendPackedByte(int byte_no, int c);
   public:
 	  Logging();
 	  void init(State& state, int baud=DEFAULT_BAUD_RATE);
     void update(State& state);
+    void writeSerial(State& state);
 };
 
 #endif

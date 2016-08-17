@@ -5,7 +5,7 @@
 #include "Arduino.h"
 
 
-const unsigned int MINIPACKET_MAX_PACKET_LENGTH = 30;
+const unsigned int MINIPACKET_MAX_PACKET_LENGTH = 50;
 
 const byte MINIPACK_MESSAGE_START = '(';
 const byte MINIPACK_MESSAGE_END = ')';

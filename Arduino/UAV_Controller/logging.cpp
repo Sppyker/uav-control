@@ -40,17 +40,40 @@ void Logging::init(State& state, int baud)
 void Logging::update(State& state)
 {
   logNo = logNo+1;
+  
+  miniout.NewPacket();
+  miniout.Pack(2, logNo); // Increment by 1 each time (int -> 2 Bytes)
+  miniout.Pack(4, millis()); // Current Timestep (Unsigned long -> 4 bytes)
+  miniout.Pack(1, state.control_mode); // Control Mode (Byte -> 1 byte)
+  miniout.PackFloat((float)state.forward_sensor1); // Forward sensor reading 1 (Float -> 3 bytes)
+  miniout.PackFloat((float)state.forward_sensor2); // Forward sensor reading 2 (Float -> 3 bytes)
+  miniout.PackFloat((float)state.altitude_sensor); // Altitude sensor reading (Float -> 3 bytes)
+  miniout.Pack(2, state.throttle_control); // Throttle control signal (Short -> 2 bytes)
+  miniout.Pack(2, 0); // Yaw control signal (Short -> 2 bytes)
+  miniout.Pack(2, 0); // Roll control signal (Short -> 2 bytes)
+  miniout.Pack(2, 0); // Pitch control signal (Short -> 2 bytes)
+  miniout.Pack(2, 0); // Stability mode control signal (Short -> 2 bytes)
+  miniout.PackFloat(state.kp_error); // Kp Error  (Float -> 3 bytes)
+  miniout.PackFloat(state.ki_error); // Ki Error (Float -> 3 bytes)
+  miniout.PackFloat(state.kd_error); // Kd Error (Float -> 3 bytes)
+  LOGGING_SERIAL_PORT.write(miniout.EndPacket());
+}
+
+
+
+void Logging::writeSerial(State& state)
+{
   LOGGING_SERIAL_PORT.print(logNo); // Increment by 1 each time (int -> 2 Bytes)
   LOGGING_SERIAL_PORT.print(" "); // (1 byte)
   LOGGING_SERIAL_PORT.print(millis()); // Current Timestep (Unsigned long -> 4 bytes)
   LOGGING_SERIAL_PORT.print(" "); // (1 byte)
   LOGGING_SERIAL_PORT.print(state.control_mode); // Control Mode (Byte -> 1 byte)
   LOGGING_SERIAL_PORT.print(" "); // (1 byte)
-  LOGGING_SERIAL_PORT.print(state.forward_sensor1); // Forward sensor reading 1 (Double -> 8 bytes)
+  LOGGING_SERIAL_PORT.print(state.forward_sensor1); 
   LOGGING_SERIAL_PORT.print(" "); // (1 byte)
-  LOGGING_SERIAL_PORT.print(state.forward_sensor2); // Forward sensor reading 2 (Double -> 8 bytes)
+  LOGGING_SERIAL_PORT.print(state.forward_sensor2); 
   LOGGING_SERIAL_PORT.print(" "); // (1 byte)
-  LOGGING_SERIAL_PORT.print(state.altitude_sensor); // Altitude sensor reading (Double -> 8 bytes)
+  LOGGING_SERIAL_PORT.print(state.altitude_sensor); 
   LOGGING_SERIAL_PORT.print(" "); // (1 byte)
   LOGGING_SERIAL_PORT.print(state.throttle_control); // Throttle control signal (Short -> 2 bytes)
   LOGGING_SERIAL_PORT.print(" "); // (1 byte)
@@ -67,14 +90,5 @@ void Logging::update(State& state)
   LOGGING_SERIAL_PORT.print(state.ki_error); // Ki Error (Float -> 4 bytes)
   LOGGING_SERIAL_PORT.print(" "); // (1 byte)
   LOGGING_SERIAL_PORT.println(state.kd_error); // Kd Error (Float -> 4 bytes)
-}
-
-
-
-void Logging::sendPackedByte(char c)
-{
-  miniout.NewPacket();
-  miniout.Pack(1, c);
-  LOGGING_SERIAL_PORT.write(miniout.EndPacket());
 }
 

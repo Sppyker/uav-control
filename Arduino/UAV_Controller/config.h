@@ -3,8 +3,8 @@
 
 /* PUT ALL REVEVANT #defines here that will be modified!! */
 
-#define MAIN_LOOP_FREQUENCY 50 // How often the main loop should poll (ms)
-#define LOG_INTERVAL 10 // How many loops of the program before each logging period is done
+#define MAIN_LOOP_FREQUENCY 10 // How often the main loop should poll (ms)
+#define LOG_INTERVAL 5 // How many loops of the program before each logging period is done
 
 // How many main loops should the sensor readings be ignored for when program first begins
 #define STARTUP_SENSOR_IGNORE 10
