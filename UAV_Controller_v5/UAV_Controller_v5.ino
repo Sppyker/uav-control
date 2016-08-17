@@ -32,11 +32,6 @@ void setup()
 void loop()
 {
 
- scheduler.init()
-
-// if (scheduler.runMainLoop) {}
-// if (scheduler.
- 
  if (millis() - main_loop_polled_time >= MAIN_LOOP_FREQUENCY)
  {
 	main_loop_polled_time = millis();
