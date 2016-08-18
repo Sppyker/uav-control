@@ -1,3 +1,9 @@
+/*
+ Name:		UAV_Controller_Project.ino
+ Created:	8/18/2016 1:02:53 PM
+ Author:	Jamie Spyker
+*/
+
 // ALL #INCLUDES GO HERE, ONLY HIGH LEVEL! Low level #includes go in respective classes as required
 
 #include "state.h"
@@ -20,13 +26,13 @@ short logging_counter;
 void setup()
 {
 	state.init();
-  logging.init(state, 19200); //NEED THIS TO BE AN OPTIONAL ARGUMENT LATER, ALSO INCREASE BAUD RATE
-  UAVcontrol.init(state);
+	logging.init(state, 19200); //NEED THIS TO BE AN OPTIONAL ARGUMENT LATER, ALSO INCREASE BAUD RATE
+	UAVcontrol.init(state);
 	sensors.init(state);
 	motorController.init(state);
 
-  main_loop_polled_time = millis();
-  logging_counter = 0;
+	main_loop_polled_time = millis();
+	logging_counter = 0;
 }
 
 void loop()
@@ -41,12 +47,12 @@ void loop()
 	motorController.update(state);
 
 
-  if (logging_counter >= LOG_INTERVAL)
-  {
-	  logging.update(state);
-    logging_counter = 0;
-  }
-  logging_counter++;
+	if (logging_counter >= LOG_INTERVAL)
+	{
+		logging.update(state);
+		logging_counter = 0;
+	}
+	logging_counter++;
   
  }
 }
