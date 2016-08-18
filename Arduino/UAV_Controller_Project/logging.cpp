@@ -39,7 +39,7 @@ void Logging::init(State& state, int baud)
 
 void Logging::update(State& state)
 {
-  logNo = logNo+1;
+  //logNo = logNo+1;
   
   miniout.NewPacket();
   miniout.Pack(2, logNo); // Increment by 1 each time (int -> 2 Bytes)
@@ -92,3 +92,7 @@ void Logging::writeSerial(State& state)
   LOGGING_SERIAL_PORT.println(state.kd_error); // Kd Error (Float -> 4 bytes)
 }
 
+void Logging::incrementLogNo()
+{
+	logNo++;
+}

@@ -45,7 +45,7 @@ void loop()
 	sensors.update(state);
 	UAVcontrol.update(state);
 	motorController.update(state);
-
+	logging.incrementLogNo();
 
 	if (logging_counter >= LOG_INTERVAL)
 	{
