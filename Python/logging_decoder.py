@@ -2,6 +2,7 @@ import minipack
 import sys
 import os
 import csv
+import datetime
 
 # Import from dragged in text file
 
@@ -10,13 +11,11 @@ import csv
 # Then use that as input
 try:
     file_name = sys.argv[1] # Read from drag-n-drop file
-    print("Loading file...", end = '')
-    print(file_name)
     if not file_name.endswith('.TXT'):
         print(".txt file required!")
 except IndexError:
-    file_name = ''
-    
+    file_name = ''   
+
 invalid_file = True
 
 if not file_name.endswith('.TXT'): # If the drag-n-drop file is not a txt file
@@ -35,8 +34,22 @@ if not file_name.endswith('.TXT'): # If the drag-n-drop file is not a txt file
             # Error if invalid location
             print("File not found!")
 else:
+    ### Doing this to pull out just the local filename ###
+    #i = 0
+    #for c in reversed(file_name):
+        #if (c == "\\"):
+            #break
+        #i = i+1
+    
+    #last_backslash = len(file_name) - i
+    #file_name = file_name[last_backslash:len(file_name)]
+    ###---------------------------------------------###
+    
     input_file = open(file_name) # If drag-n-drop in file is a .txt, open it
 
+print("Loading file...", end = '')
+print(file_name)
+    
 print("Success! Decoding ", end="")
 print(file_name)
 
@@ -44,7 +57,7 @@ miniinput = minipack.MinipackInput()
 
 data_line = ''
 
-header = ['logNo','timeStep','controlMode', 'forwardSensor1', 'forwardSensor2', 'AltitudeSensor', 'throttleControl', 'yawControl', 'rollControl', 'pitchControl', 'stablilityModeControl', 'errorP', 'errorI', 'errorD']
+header = ['InitialVarHeader','InitialVars','logNo','timeStep','controlMode', 'forwardSensor1', 'forwardSensor2', 'AltitudeSensor', 'throttleControl', 'yawControl', 'rollControl', 'pitchControl', 'stablilityModeControl', 'errorP', 'errorI', 'errorD']
 
 logNo = []
 timeStep = []
@@ -61,9 +74,22 @@ errorP = []
 errorI = []
 errorD = []
 
-for line in input_file:
+for i,line in enumerate(input_file):
+    if i == 1:
+        # Create an array 
+        initial_vars = line.rstrip()
+        initial_vars = initial_vars.split(' ')
+        initial_vars = [float(i) for i in initial_vars]
+        
+        
+    if i == 2:
+        initial_vars_header = line.rstrip()
+        initial_vars_header = initial_vars_header.split(',')
+        
     if line[0] == '(':
-        data_line = line   
+        data_line = line
+        
+
 
 if (data_line == ''):
     print('Data line not found!')
@@ -94,16 +120,44 @@ for c in data_line:
         if (error):
             print("Error in pack %d" % array_no)
 
-data_array = [logNo,timeStep,controlMode,forwardSensor1,forwardSensor2,AltitudeSensor,throttleControl,yawControl,rollControl,pitchControl,stablilityModeControl,errorP,errorI,errorD]
+
+# Extend short inital values arrays with zeros
+
+total_data_logs = len(logNo)
+while (len(initial_vars)<total_data_logs):
+    initial_vars.append(0)
+    
+while (len(initial_vars_header)<total_data_logs):
+    initial_vars_header.append(0)
+
+
+data_array = [initial_vars_header,initial_vars,logNo,timeStep,controlMode,forwardSensor1,forwardSensor2,AltitudeSensor,throttleControl,yawControl,rollControl,pitchControl,stablilityModeControl,errorP,errorI,errorD]
 transposed_data_array = [list(x) for x in zip(*data_array)]
 transposed_data_array.insert(0, header)
 
 
+time = datetime.datetime.strftime(datetime.datetime.now(), '%Y-%m-%d')
+
+output_file_name = time + '_TEST_'
+output_file_suffix = '%s.csv'
+
+i = 0
+check_output_file_name = output_file_name + output_file_suffix
+while os.path.exists(check_output_file_name % i):
+    i += 1
+
+output_file_name = output_file_name + (output_file_suffix % i)
+
 # ERROR: Permissions denied when running via drag and drop
-with open('test.csv', 'w', newline='') as fp:
-    data_csv = csv.writer(fp, delimiter=',')
-    data_csv.writerows(transposed_data_array)
+try:
+    with open(output_file_name, 'w', newline='') as fp:
+        data_csv = csv.writer(fp, delimiter=',')
+        data_csv.writerows(transposed_data_array)
+    print("Complete! Results stored in %s" % output_file_name)
+except PermissionError:
+    print("Permission error! Cannot write " + output_file_name)
     
-input("Complete! Press enter to exit...")
+
+input("Press enter to exit...")
 
 #Use the unpacked data here!!!
