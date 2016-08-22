@@ -1,7 +1,7 @@
 clc
 clear
 
-filename = '2016-08-19_TEST_0.csv';
+filename = '2016-08-22_TEST_0.csv';
 full_data_array = csvread(filename,1,2)
 
 
