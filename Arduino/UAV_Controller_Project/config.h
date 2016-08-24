@@ -14,9 +14,9 @@
 #define ALTITUDE_PID_GAIN_RATIO 1
 
 // Define the PID values for the altitude controls
-#define ALTITUDE_KP 1*ALTITUDE_PID_GAIN_RATIO
-#define ALTITUDE_KI 0.6*ALTITUDE_PID_GAIN_RATIO
-#define ALTITUDE_KD 0.05*ALTITUDE_PID_GAIN_RATIO
+#define ALTITUDE_KP 0.6*ALTITUDE_PID_GAIN_RATIO
+#define ALTITUDE_KI 0.3*ALTITUDE_PID_GAIN_RATIO
+#define ALTITUDE_KD 0.001*ALTITUDE_PID_GAIN_RATIO
 
 // Multiplier for KP,KI,KD if ratio correct but gain wrong.
 

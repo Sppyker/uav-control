@@ -1,7 +1,7 @@
 clc
 clear
 
-filename = '2016-08-22_TEST_0.csv';
+filename = '2016-08-23_TEST_8.csv';
 full_data_array = csvread(filename,1,2)
 
 
@@ -28,3 +28,13 @@ hold all
 plot(TimeStep,AltitudeSensor);
 plot(TimeStep,ThrottleControl);
 plot(TimeStep,ControlMode*3000);
+hold off
+
+figure
+hold all
+plot(TimeStep,ErrorP);
+plot(TimeStep,ErrorI);
+plot(TimeStep,ErrorD);
+plot(TimeStep,ThrottleControl);
+plot(TimeStep,ControlMode*3000);
+legend('P','I', 'D', 'Total')

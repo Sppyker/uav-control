@@ -5,7 +5,7 @@
 #include <Arduino.h>
 #include "runningMedian.h"
 
-#define DIFFERENTIAL_MEDIAN_DEFAULT_BUFFER 5
+#define DIFFERENTIAL_MEDIAN_DEFAULT_BUFFER 3
 
 class PID {
 	private:

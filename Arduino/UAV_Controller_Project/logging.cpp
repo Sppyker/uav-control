@@ -11,7 +11,7 @@ void Logging::init(State& state, int baud)
 {
   logNo = 0;
   
-	LOGGING_SERIAL_PORT.begin(baud);
+  LOGGING_SERIAL_PORT.begin(baud);
   delay(2500); // DELAY TO ALLOW TO START UP
   LOGGING_SERIAL_PORT.print("Initiating logging...");
   

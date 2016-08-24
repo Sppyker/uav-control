@@ -5,7 +5,7 @@
 #include <Arduino.h>
 #include "runningMedian.h"
 
-#define MEDIAN_BUFFER_SIZE 5
+#define MEDIAN_BUFFER_SIZE 1
 
 class PWMInterrupt {
 	private:
