@@ -3,7 +3,7 @@
 
 /* PUT ALL REVEVANT #defines here that will be modified!! */
 
-#define MAIN_LOOP_FREQUENCY 10 // How often the main loop should poll (ms)
+#define MAIN_LOOP_FREQUENCY 20 // How often the main loop should poll (ms)
 #define LOG_INTERVAL 5 // How many loops of the program before each logging period is done
 
 // How many main loops should the sensor readings be ignored for when program first begins
@@ -33,20 +33,21 @@
 #define LOGGING_SERIAL_PORT Serial3
 
 // Pin definitions
-#define CONTROL_MODE_PIN 22 // HIGH = Manual, LOW = Auto
-#define AUTONOMOUS_STABLE_MODE_PIN 24 
-#define AUTONOMOUS_YAW_PIN 26
-#define AUTONOMOUS_THROTTLE_PIN 28 
-#define AUTONOMOUS_ROLL_PIN 30
-#define AUTONOMOUS_PITCH_PIN 32
+#define CONTROL_MODE_PIN A1 // HIGH = Manual, LOW = Auto
+#define AUTONOMOUS_THROTTLE_PIN 38 
+#define AUTONOMOUS_ROLL_PIN 40
+#define AUTONOMOUS_PITCH_PIN 42
+#define AUTONOMOUS_YAW_PIN 44
+#define AUTONOMOUS_STABLE_MODE_PIN 46 
 
 // Ultrasonic sensor pins reading PWM signal
 
-#define ULTRASONIC_PIN_0 21
-#define ULTRASONIC_PIN_1 20
-#define ULTRASONIC_PIN_2 19
+#define ULTRASONIC_PIN_0 21 // REDEFINE REQUIRED
+#define ULTRASONIC_PIN_1 20 // REDEFINE REQUIRED
 
-#define ULTRASONIC_ENABLE_PIN_2 18
+#define ULTRASONIC_PIN_2 18
+#define ULTRASONIC_ENABLE_PIN_2 17
+
 
 
 
