@@ -17,6 +17,7 @@ void Sensors::init(State& state)
   // Enable sensor 2 by holding trigger pin low
   pinMode(ULTRASONIC_ENABLE_PIN_2, OUTPUT); // THESE SHOULD BE MOVED SOMEWHERE ELSE??
   digitalWrite(ULTRASONIC_ENABLE_PIN_2, LOW); // THESE SHOULD BE MOVED SOMEWHERE ELSE??
+
 }
 
 void Sensors::update(State& state)

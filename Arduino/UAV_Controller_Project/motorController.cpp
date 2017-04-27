@@ -33,6 +33,12 @@ void MotorController::update(State& state)
   if (state.throttle_control >= PWM_LIMIT_MAX) { state.throttle_control = PWM_LIMIT_MAX; }
   if (state.throttle_control <= PWM_LIMIT_MIN) { state.throttle_control = PWM_LIMIT_MIN; }
 
+  /* Limit the tilt command signal, such that it does not exceed these */
+  if (state.pitch_control >= TILT_LIMIT_MAX) { state.pitch_control = TILT_LIMIT_MAX; }
+  if (state.pitch_control <= TILT_LIMIT_MIN) { state.pitch_control = TILT_LIMIT_MIN; }
+
   /* Update all the motors with their required PWM control*/
 	UAV_throttle.writeMicroseconds((state.throttle_control));
+  UAV_pitch.writeMicroseconds((state.pitch_control));
+ 
 }

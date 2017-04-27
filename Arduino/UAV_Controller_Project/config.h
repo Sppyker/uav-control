@@ -20,17 +20,31 @@
 
 // Multiplier for KP,KI,KD if ratio correct but gain wrong.
 
+// Define the PID values for the distance control
+
+#define DISTANCE_KP 0.6
+#define DISTANCE_KI 0.3
+#define DISTANCE_KD 0.1
+
 
 // Limit throttle during testing such that the UAV does not fly upwards with too much force (1000 -> 2000 | MIN -> MAX)
 #define THROTTLE_LIMIT 1800
 
+// Limit the angle of the UAV so it cannot tilt excessively
+
+#define TILT_LIMIT_MAX 1700
+#define TILT_LIMIT_MIN 1300
 
 // Desired height that the UAV will remain at (millimetres)
 
 #define ALTITUDE_DESIRED_HOVER_HEIGHT 1200
 
+// Desired distance from a wall that the UAV will remain at
+
+#define WALL_DISTANCE_DESIRED 600
+
 // Serial port to log data on (Currently Serial or Serial3)
-#define LOGGING_SERIAL_PORT Serial3
+#define LOGGING_SERIAL_PORT Serial
 
 // Pin definitions
 #define CONTROL_MODE_PIN A1 // HIGH = Manual, LOW = Auto
@@ -42,10 +56,10 @@
 
 // Ultrasonic sensor pins reading PWM signal
 
-#define ULTRASONIC_PIN_0 20 // REDEFINE REQUIRED
-#define ULTRASONIC_PIN_1 19 // REDEFINE REQUIRED
-
+#define ULTRASONIC_PIN_0 20
+#define ULTRASONIC_PIN_1 19
 #define ULTRASONIC_PIN_2 18
+
 #define ULTRASONIC_ENABLE_PIN_2 17
 
 

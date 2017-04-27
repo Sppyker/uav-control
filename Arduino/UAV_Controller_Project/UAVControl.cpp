@@ -15,10 +15,16 @@ void UAVControl::init(State& state)
   altitudePID.setOutputLimits(0,1000);
   altitudePID.init(ALTITUDE_KP, ALTITUDE_KI, ALTITUDE_KD, altitude_setpoint, ALTITUDE_PID_LIMIT_MIN, ALTITUDE_PID_LIMIT_MAX);
 
+  // Wall Distance
+  wall_distance_setpoint = WALL_DISTANCE_DESIRED;
+  // Get initial ultrasonic distance
+  wall_distance_input = (state.forward_sensor1 + state.forward_sensor2)/2;
+  wall_distance_PID.setOutputLimits(0,1000);
+  altitudePID.init(DISTANCE_KP, DISTANCE_KI, DISTANCE_KD, wall_distance_setpoint, DISTANCE_PID_LIMIT_MIN, DISTANCE_PID_LIMIT_MAX);
 
-  //forward1_input = state.forward_sensor1;
-
+  // Startup delay, sensors provide wrong values when starting up
   startup_delay = STARTUP_SENSOR_IGNORE;
+  
 }
 
 void UAVControl::update(State& state)
@@ -28,21 +34,17 @@ void UAVControl::update(State& state)
  
  // Read the altitude sensor to determine current height
  altitude_input = state.altitude_sensor;
+
+ // Read the distance sensor to determine distance from wlal
+ wall_distance_input = (state.forward_sensor1 + state.forward_sensor2)/2;
  
  // Ignore the first STARTUP_SENSOR_IGNORE sensor reads, as first reads can be inaccurate
  if (startup_delay >= 0) { altitude_input = ALTITUDE_DESIRED_HOVER_HEIGHT; startup_delay--;}
 
- // Set integral to 0 if not in control mode
+ // Set integral to 0 if in Manual Mode
  if (state.control_mode == MANUAL_CONTROL) { altitudePID.resetIntegral(); }
-
- // Read both distance sensors to determine distance from wall
- // Make sure the difference between the two sensors is within a certain range
- // If not: Rotate YAW to adjust them towards each other (SLOWLY)
- // If so: Use PID to adjust pitch to move UAV to desired position to wall (SLOWLY)
-
- // Right now roll is left at neutral as no way to detect the position along the wall.
   
- // Use PID to converge towards desired 
+ // Use altitude PID to converge towards desired 
  altitude_output = altitudePID.update(altitude_input);
  state.kp_error = altitudePID.getErrorP();
  state.ki_error = altitudePID.getErrorI();
@@ -53,4 +55,10 @@ void UAVControl::update(State& state)
  {
    state.throttle_control = THROTTLE_LIMIT;
  }
+
+// Use distance PID to converge towards desired distance
+wall_distance_output = wall_distance_PID.update(wall_distance_input);
+state.pitch_control = wall_distance_output+PWM_LIMIT_MIN;
+
+ 
 }

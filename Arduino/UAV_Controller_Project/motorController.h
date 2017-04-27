@@ -5,6 +5,7 @@
 #include <Arduino.h>
 #include "state.h"
 #include <Servo.h>
+#include "config.h"
 
 #define PWM_LIMIT_MIN 1000
 #define PWM_LIMIT_MAX 2000

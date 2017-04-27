@@ -10,12 +10,17 @@
 
 #define ALTITUDE_PID_LIMIT_MIN 0
 #define ALTITUDE_PID_LIMIT_MAX 1000
+#define DISTANCE_PID_LIMIT_MIN 0
+#define DISTANCE_PID_LIMIT_MAX 1000
 
 class UAVControl {
   private:
     int altitude_setpoint,  altitude_input,  altitude_output;
     PID altitudePID;
     int startup_delay;
+    int wall_distance_setpoint, wall_distance_input, wall_distance_output;
+    PID wall_distance_PID;
+    
   public:
 	  UAVControl();
 	  void init(State& state);
