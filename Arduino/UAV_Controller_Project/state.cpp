@@ -35,4 +35,9 @@ void State::defaults()
  kp_error_altitude = 0;
  ki_error_altitude = 0;
  kd_error_altitude = 0;
+
+ kp_error_wall_distance = 0;
+ ki_error_wall_distance = 0;
+ kd_error_wall_distance = 0;
+ 
 }

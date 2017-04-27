@@ -44,7 +44,8 @@ void UAVControl::update(State& state)
  // Set integral to 0 if in Manual Mode
  if (state.control_mode == MANUAL_CONTROL) { altitudePID.resetIntegral(); }
   
- // Use altitude PID to converge towards desired 
+ // Use altitude PID to converge towards desired
+ /*
  altitude_output = altitudePID.update(altitude_input);
  state.kp_error_altitude = altitudePID.getErrorP();
  state.ki_error_altitude = altitudePID.getErrorI();
@@ -55,9 +56,14 @@ void UAVControl::update(State& state)
  {
    state.throttle_control = THROTTLE_LIMIT;
  }
+ */
 
 // Use distance PID to converge towards desired distance
-wall_distance_output = wall_distance_PID.update(wall_distance_input);
+wall_distance_output = (wall_distance_PID.update(wall_distance_input))*-1;
+state.kp_error_wall_distance = wall_distance_PID.getErrorP();
+state.ki_error_wall_distance = wall_distance_PID.getErrorI();
+state.kd_error_wall_distance = wall_distance_PID.getErrorD();
+
 state.pitch_control = wall_distance_output+PWM_NEUTRAL;
  
 }

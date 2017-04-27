@@ -53,9 +53,9 @@ void Logging::update(State& state)
   miniout.Pack(2, 0); // Roll control signal (Short -> 2 bytes)
   miniout.Pack(2, state.pitch_control); // Pitch control signal (Short -> 2 bytes)
   miniout.Pack(2, 0); // Stability mode control signal (Short -> 2 bytes)
-  miniout.PackFloat(state.kp_error_altitude); // Kp Error  (Float -> 3 bytes)
-  miniout.PackFloat(state.ki_error_altitude); // Ki Error (Float -> 3 bytes)
-  miniout.PackFloat(state.kd_error_altitude); // Kd Error (Float -> 3 bytes)
+  miniout.PackFloat(state.kp_error_wall_distance); // Kp Error  (Float -> 3 bytes)
+  miniout.PackFloat(state.ki_error_wall_distance); // Ki Error (Float -> 3 bytes)
+  miniout.PackFloat(state.kd_error_wall_distance); // Kd Error (Float -> 3 bytes)
   LOGGING_SERIAL_PORT.write(miniout.EndPacket());
 }
 
@@ -85,11 +85,11 @@ void Logging::writeSerial(State& state)
   LOGGING_SERIAL_PORT.print(" "); // (1 byte)
   LOGGING_SERIAL_PORT.print(0); // Stability mode control signal (Short -> 2 bytes)
   LOGGING_SERIAL_PORT.print(" "); // (1 byte)
-  LOGGING_SERIAL_PORT.print(state.kp_error_altitude); // Kp Error  (Float -> 4 bytes)
+  LOGGING_SERIAL_PORT.print(state.kp_error_wall_distance); // Kp Error  (Float -> 4 bytes)
   LOGGING_SERIAL_PORT.print(" "); // (1 byte)
-  LOGGING_SERIAL_PORT.print(state.ki_error_altitude); // Ki Error (Float -> 4 bytes)
+  LOGGING_SERIAL_PORT.print(state.ki_error_wall_distance); // Ki Error (Float -> 4 bytes)
   LOGGING_SERIAL_PORT.print(" "); // (1 byte)
-  LOGGING_SERIAL_PORT.println(state.kd_error_altitude); // Kd Error (Float -> 4 bytes)
+  LOGGING_SERIAL_PORT.println(state.kd_error_wall_distance); // Kd Error (Float -> 4 bytes)
 }
 
 void Logging::incrementLogNo()

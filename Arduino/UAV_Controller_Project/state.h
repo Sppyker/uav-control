@@ -30,6 +30,10 @@ class State {
     float kp_error_altitude;
     float ki_error_altitude;
     float kd_error_altitude;
+
+    float kp_error_wall_distance;
+    float ki_error_wall_distance;
+    float kd_error_wall_distance;
     
 	  State();
     void init();

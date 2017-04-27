@@ -44,7 +44,7 @@
 #define WALL_DISTANCE_DESIRED 500
 
 // Serial port to log data on (Currently Serial or Serial3)
-#define LOGGING_SERIAL_PORT Serial
+#define LOGGING_SERIAL_PORT Serial3
 
 // Pin definitions
 #define CONTROL_MODE_PIN A1 // HIGH = Manual, LOW = Auto
