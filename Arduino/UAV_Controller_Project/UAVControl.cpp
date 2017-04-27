@@ -19,8 +19,8 @@ void UAVControl::init(State& state)
   wall_distance_setpoint = WALL_DISTANCE_DESIRED;
   // Get initial ultrasonic distance
   wall_distance_input = (state.forward_sensor1 + state.forward_sensor2)/2;
-  wall_distance_PID.setOutputLimits(0,1000);
-  altitudePID.init(DISTANCE_KP, DISTANCE_KI, DISTANCE_KD, wall_distance_setpoint, DISTANCE_PID_LIMIT_MIN, DISTANCE_PID_LIMIT_MAX);
+  wall_distance_PID.setOutputLimits(-50,50);
+  wall_distance_PID.init(DISTANCE_KP, DISTANCE_KI, DISTANCE_KD, wall_distance_setpoint, DISTANCE_PID_LIMIT_MIN, DISTANCE_PID_LIMIT_MAX);
 
   // Startup delay, sensors provide wrong values when starting up
   startup_delay = STARTUP_SENSOR_IGNORE;
@@ -35,7 +35,7 @@ void UAVControl::update(State& state)
  // Read the altitude sensor to determine current height
  altitude_input = state.altitude_sensor;
 
- // Read the distance sensor to determine distance from wlal
+ // Read the distance sensor to determine distance from wall
  wall_distance_input = (state.forward_sensor1 + state.forward_sensor2)/2;
  
  // Ignore the first STARTUP_SENSOR_IGNORE sensor reads, as first reads can be inaccurate
@@ -46,9 +46,9 @@ void UAVControl::update(State& state)
   
  // Use altitude PID to converge towards desired 
  altitude_output = altitudePID.update(altitude_input);
- state.kp_error = altitudePID.getErrorP();
- state.ki_error = altitudePID.getErrorI();
- state.kd_error = altitudePID.getErrorD();
+ state.kp_error_altitude = altitudePID.getErrorP();
+ state.ki_error_altitude = altitudePID.getErrorI();
+ state.kd_error_altitude = altitudePID.getErrorD();
  
  state.throttle_control = altitude_output+PWM_LIMIT_MIN;
  if (state.throttle_control >= THROTTLE_LIMIT)
@@ -58,7 +58,6 @@ void UAVControl::update(State& state)
 
 // Use distance PID to converge towards desired distance
 wall_distance_output = wall_distance_PID.update(wall_distance_input);
-state.pitch_control = wall_distance_output+PWM_LIMIT_MIN;
-
+state.pitch_control = wall_distance_output+PWM_NEUTRAL;
  
 }

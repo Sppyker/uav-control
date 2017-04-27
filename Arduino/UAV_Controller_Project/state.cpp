@@ -32,7 +32,7 @@ void State::defaults()
 
  // PID
 
- kp_error = 0;
- ki_error = 0;
- kd_error = 0;
+ kp_error_altitude = 0;
+ ki_error_altitude = 0;
+ kd_error_altitude = 0;
 }

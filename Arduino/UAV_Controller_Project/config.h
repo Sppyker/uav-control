@@ -22,9 +22,9 @@
 
 // Define the PID values for the distance control
 
-#define DISTANCE_KP 0.6
-#define DISTANCE_KI 0.3
-#define DISTANCE_KD 0.1
+#define DISTANCE_KP 0.5
+#define DISTANCE_KI 0
+#define DISTANCE_KD 0
 
 
 // Limit throttle during testing such that the UAV does not fly upwards with too much force (1000 -> 2000 | MIN -> MAX)
@@ -41,7 +41,7 @@
 
 // Desired distance from a wall that the UAV will remain at
 
-#define WALL_DISTANCE_DESIRED 600
+#define WALL_DISTANCE_DESIRED 500
 
 // Serial port to log data on (Currently Serial or Serial3)
 #define LOGGING_SERIAL_PORT Serial

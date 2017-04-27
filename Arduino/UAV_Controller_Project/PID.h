@@ -19,9 +19,9 @@ class PID {
 		float error_sum;
 		float error_previous;
 		float error_difference;
-		float kp_error;
-		float ki_error;
-		float kd_error;
+		float kp_error_altitude;
+		float ki_error_altitude;
+		float kd_error_altitude;
 		float timestep;
 		unsigned long time_previous;
 		unsigned long time;

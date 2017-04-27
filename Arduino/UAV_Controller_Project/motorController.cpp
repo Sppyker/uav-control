@@ -9,7 +9,8 @@ MotorController::MotorController()
 // Init all the sensors
 void MotorController::init(State& state)
 {
-	// Attach the servos to control 
+	// Attach the servos to control
+ /* 
   UAV_stable_mode.attach(AUTONOMOUS_STABLE_MODE_PIN,PWM_LIMIT_MIN, PWM_LIMIT_MAX);
   UAV_stable_mode.writeMicroseconds(PWM_NEUTRAL);
 
@@ -21,7 +22,14 @@ void MotorController::init(State& state)
 
   UAV_roll.attach(AUTONOMOUS_ROLL_PIN,PWM_LIMIT_MIN, PWM_LIMIT_MAX);
   UAV_roll.writeMicroseconds(PWM_NEUTRAL);
+  */
 
+  // Make it so they do not mess with the feed through of other inputs
+  pinMode(AUTONOMOUS_STABLE_MODE_PIN, INPUT);
+  pinMode(AUTONOMOUS_YAW_PIN, INPUT);
+  pinMode(AUTONOMOUS_THROTTLE_PIN, INPUT);
+  pinMode(AUTONOMOUS_ROLL_PIN, INPUT);
+  
   UAV_pitch.attach(AUTONOMOUS_PITCH_PIN,PWM_LIMIT_MIN, PWM_LIMIT_MAX);
   UAV_pitch.writeMicroseconds(PWM_NEUTRAL);
 }
@@ -38,7 +46,7 @@ void MotorController::update(State& state)
   if (state.pitch_control <= TILT_LIMIT_MIN) { state.pitch_control = TILT_LIMIT_MIN; }
 
   /* Update all the motors with their required PWM control*/
-	UAV_throttle.writeMicroseconds((state.throttle_control));
+	//UAV_throttle.writeMicroseconds((state.throttle_control));
   UAV_pitch.writeMicroseconds((state.pitch_control));
  
 }

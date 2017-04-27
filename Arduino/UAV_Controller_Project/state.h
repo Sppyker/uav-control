@@ -27,9 +27,9 @@ class State {
 
     // PID
 
-    float kp_error;
-    float ki_error;
-    float kd_error;
+    float kp_error_altitude;
+    float ki_error_altitude;
+    float kd_error_altitude;
     
 	  State();
     void init();

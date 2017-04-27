@@ -43,12 +43,12 @@ int PID::update(int input)
   error_difference = differential_median_filter.getAverage();
   
 	/* Compute each part of the PID error */
-	kp_error = kp*error;
-	ki_error = ki*error_sum;
-	kd_error = kd*error_difference;
+	kp_error_altitude = kp*error;
+	ki_error_altitude = ki*error_sum;
+	kd_error_altitude = kd*error_difference;
 	
 	/* Compute PID output_iterator */
-	output = kp_error + ki_error + kd_error;
+	output = kp_error_altitude + ki_error_altitude + kd_error_altitude;
   
   /* Limit the output between two variables */
   if (output >= output_limit_max) { output = output_limit_max; }
@@ -78,17 +78,17 @@ void PID::setErrorSumLimit(int new_error_sum_limit)
 
 float PID::getErrorP()
 {
-  return kp_error;
+  return kp_error_altitude;
 }
 
 float PID::getErrorI()
 {
-  return ki_error;
+  return ki_error_altitude;
 }
 
 float PID::getErrorD()
 {
-  return kd_error;
+  return kd_error_altitude;
 }
 
 void PID::resetIntegral()
