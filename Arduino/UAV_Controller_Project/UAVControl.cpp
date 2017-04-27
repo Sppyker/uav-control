@@ -14,6 +14,10 @@ void UAVControl::init(State& state)
   altitude_input = state.altitude_sensor;
   altitudePID.setOutputLimits(0,1000);
   altitudePID.init(ALTITUDE_KP, ALTITUDE_KI, ALTITUDE_KD, altitude_setpoint, ALTITUDE_PID_LIMIT_MIN, ALTITUDE_PID_LIMIT_MAX);
+
+
+  //forward1_input = state.forward_sensor1;
+
   startup_delay = STARTUP_SENSOR_IGNORE;
 }
 

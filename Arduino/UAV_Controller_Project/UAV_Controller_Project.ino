@@ -50,6 +50,7 @@ void loop()
 	//if (logging_counter >= LOG_INTERVAL)
 	//{
 	logging.update(state);
+  //logging.writeSerial(state);
 	//	logging_counter = 0;
 	//}
 	//logging_counter++;
